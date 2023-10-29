@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String      @id @default(cuid())
+  password     String
+  name         String
+  email        String
+  recipes      Recipe[]
+  likedRecipes Like[]
+  following    Following[]
+  followers    Followers[]
+
+  Follow   Follow @relation(fields: [followId], references: [id])
+  followId String @unique
+}
+
+model Follow {
+  id        String      @id @default(cuid())
+  name      String?
+  following Following[]
+  followers Followers[]
+  User      User?
+}
+
+model Following {
+  id       String @id @default(cuid())
+  userId   String
+  followId String
+  user     User   @relation(fields: [userId], references: [id])
+  follow   Follow @relation(fields: [followId], references: [id])
+}
+
+model Followers {
+  id       String  @id @default(cuid())
+  userId   String?
+  followId String?
+  Follow   Follow? @relation(fields: [followId], references: [id])
+  User     User?   @relation(fields: [userId], references: [id])
+}
+
+model Recipe {
+  id          String  @id @default(cuid())
+  name        String
+  description String
+  ingredients String
+  preparation String
+  likes       Like[]
+  User        User?   @relation(fields: [userId], references: [id])
+  userId      String?
+}
+
+model Like {
+  id       String  @id @default(cuid())
+  User     User?   @relation(fields: [userId], references: [id])
+  userId   String?
+  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId String?
+}
