@@ -7,14 +7,14 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_LOCAL")
 }
 
 model User {
   id           String      @id @default(cuid())
   password     String
   name         String
-  email        String
+  email        String      @unique
   recipes      Recipe[]
   likedRecipes Like[]
   following    Following[]
