@@ -3,7 +3,6 @@ import { CreateRecipeDto } from "../dtos/createRecipeDto";
 import { findDetailsRecipe } from "../services/recipe/findDetailsRecipe";
 import { createRecipe } from "../services/recipe/createRecipe";
 import { findAllRecipe } from "../services/recipe/findAllRecipe";
-import { likeRecipe } from "../services/Like/likeRecipe";
 import { findAllRecipesFromFollow } from "../services/recipe/findAllRecipesFromFollow";
 
 export const getDetailsRecipe = async (req: Request, res: Response) => {

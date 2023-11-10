@@ -3,8 +3,6 @@ import { CreateUserDto } from "../dtos/createUserDto";
 import { createUser } from "../services/user/createUser";
 import { findOneUser } from "../services/user/findOneUser";
 import { findLoginUser } from "../services/user/findLoginUser";
-import { FollowUserDto } from "../dtos/followUserDto";
-import { followUser } from "../services/follow/followUser";
 import { findAllUser } from "../services/user/findAllUser";
 
 export const postCreateUser = async (req: Request, res: Response) => {
@@ -34,8 +32,15 @@ export const postRealiseLogin = async (req: Request, res: Response) => {
 export const getOneUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const user = await findOneUser(id);
-    return res.json(user);
+    let profile;
+    if (req.body.userId) {
+      const userId = req.body.userId;
+      profile = await findOneUser(id, userId);
+      res.json(profile);
+    }
+
+    profile = await findOneUser(id);
+    return res.json(profile);
   } catch (error) {
     console.log(error);
   }

@@ -1,7 +1,7 @@
 import { clientDataBase } from "../../database/clientDataBase";
 
-export const findOneUser = async (id: string) => {
-  return await clientDataBase.user.findUnique({
+export const findOneUser = async (id: string, userId?: string) => {
+  const profile = await clientDataBase.user.findUnique({
     where: {
       id,
     },
@@ -19,4 +19,19 @@ export const findOneUser = async (id: string) => {
       },
     },
   });
+
+  if (userId) {
+    const isFollowing = await clientDataBase.following.findFirst({
+      where: {
+        userId,
+        followId: profile?.followId,
+      },
+    });
+
+    if (isFollowing) {
+      return { ...profile, iFollow: true };
+    }
+  }
+
+  return { ...profile };
 };
