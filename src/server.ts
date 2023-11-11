@@ -13,5 +13,6 @@ app.use("/recipe", recipeRouter);
 app.use("/user", userRouter);
 app.use("/like", likeRoute);
 app.use("/follow", followRoute);
+app.use("/login", userRouter);
 
 app.listen(3333, () => "server running on port 3333");
