@@ -4,6 +4,7 @@ import { findDetailsRecipe } from "../services/recipe/findDetailsRecipe";
 import { createRecipe } from "../services/recipe/createRecipe";
 import { findAllRecipe } from "../services/recipe/findAllRecipe";
 import { findAllRecipesFromFollow } from "../services/recipe/findAllRecipesFromFollow";
+import { findAllMyRecipes } from "../services/recipe/findAllMyRecipes";
 
 export const getDetailsRecipe = async (req: Request, res: Response) => {
   try {
@@ -43,3 +44,14 @@ export const getAllRecipesFromFollow = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+
+export const getAllMyRecipes = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const recipes = await findAllMyRecipes(id);
+    return res.json(recipes);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
