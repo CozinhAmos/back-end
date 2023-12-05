@@ -9,7 +9,6 @@ export const postCreateUser = async (req: Request, res: Response) => {
   try {
     const data: CreateUserDto = req.body;
     const result = await createUser(data);
-    console.log("tentou criar");
     return res.json(result);
   } catch (error) {
     console.log(error);
